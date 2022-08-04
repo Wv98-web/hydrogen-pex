@@ -33,3 +33,20 @@ To run a local preview of your Hydrogen app in an environment similar to Oxygen,
 yarn build
 yarn preview
 ```
+
+## Template
+
+├── public
+│   └── assets
+|   │   └── favicon.svg   // Hydrogen favicon
+├── src
+    ├── routes
+    │   ├── index.server.jsx  // The React Server Component used to render your app's homepage
+    ├── App.server.jsx  // Your app's top-level React component
+    ├── index.css   // Styles
+├── hydrogen.config.js  // Hydrogen configuration file
+├── index.html   // Your app's root HTML template
+├── jsconfig.json // JavaScript or TypeScript configuration file
+├── package.json   // Used to install dependencies and run scripts
+├── README.md   // A README file that introduces the Hello World template
+├── vite.config.js  // Vite configuration file
