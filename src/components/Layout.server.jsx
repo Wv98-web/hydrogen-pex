@@ -7,6 +7,11 @@ import {
   Seo,
 } from '@shopify/hydrogen';
 import {Suspense} from 'react';
+import {parseMenu} from '../lib/util';
+
+import {Header} from './index';
+
+const HEADER_MENU_HANDLE = 'main-menu';
 
 /**
  * A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
@@ -15,12 +20,7 @@ export function Layout({children}) {
   const {pathname} = useUrl();
   const isHome = pathname === '/';
 
-  const {
-    data: {shop},
-  } = useShopQuery({
-    query: SHOP_QUERY,
-    cache: CacheLong(),
-  });
+  const {shop, menu} = useLayoutQuery();
 
   return (
     <>
@@ -49,6 +49,8 @@ export function Layout({children}) {
             <Link className="font-bold" to="/">
               {shop.name}
             </Link>
+
+            <Header menu={menu} />
           </div>
         </header>
 
@@ -60,11 +62,48 @@ export function Layout({children}) {
   );
 }
 
+function useLayoutQuery() {
+  const {data} = useShopQuery({
+    query: SHOP_QUERY,
+    variables: {
+      headerMenuHandle: HEADER_MENU_HANDLE,
+    },
+    cache: CacheLong(),
+  });
+
+  const customPrefixes = {BLOG: '', CATALOG: 'products'};
+
+  const shop = data?.shop;
+  const menu = data?.menu ? parseMenu(data.menu, customPrefixes) : undefined;
+
+  return {shop, menu};
+}
+
 const SHOP_QUERY = gql`
-  query ShopInfo {
+  fragment MenuItem on MenuItem {
+    id
+    resourceId
+    tags
+    title
+    type
+    url
+  }
+  query LayoutMenus($headerMenuHandle: String!) {
     shop {
       name
       description
+    }
+    menu(handle: $headerMenuHandle) {
+      id
+      items {
+        ...MenuItem
+        items {
+          ...MenuItem
+          items {
+            ...MenuItem
+          }
+        }
+      }
     }
   }
 `;
