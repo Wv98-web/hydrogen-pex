@@ -1,10 +1,9 @@
-import {Fragment} from 'react';
+import React, {Fragment} from 'react';
 import {Link} from '@shopify/hydrogen';
-import React from 'react';
 import {Popover, Transition} from '@headlessui/react';
 import {classNames} from '../../lib/util';
 
-export function Header({menu}) {
+export function Header({menu, isHome}) {
   return (
     <>
       <nav>
@@ -18,11 +17,19 @@ export function Header({menu}) {
                       <div className="relative flex">
                         {/* level 1 */}
                         <Popover.Button
-                          className={classNames(
-                            open
-                              ? 'border-indigo-500 text-indigo-600'
-                              : 'border-transparent text-gray-700 hover:text-gray-900',
-                          )}
+                          className={
+                            !isHome
+                              ? classNames(
+                                  open
+                                    ? 'border-indigo-500 text-indigo-600'
+                                    : 'border-transparent text-gray-500 hover:text-gray-900',
+                                )
+                              : classNames(
+                                  open
+                                    ? 'border-indigo-500 text-indigo-600'
+                                    : 'border-transparent text-white hover:text-gray-300',
+                                )
+                          }
                         >
                           {item.title}
                         </Popover.Button>
@@ -76,6 +83,7 @@ export function Header({menu}) {
                                       to={item.to}
                                       className="text-gray-500 hover:text-gray-900"
                                     >
+                                      {/* level 2 */}
                                       {item.title}
                                     </Link>
                                   ),
@@ -89,16 +97,25 @@ export function Header({menu}) {
                   )}
                 </Popover>
               ) : (
-                <Popover>
+                <Popover key={item.id}>
+                  {/* level 1 */}
                   {({open}) => (
                     <>
                       <div className="relative flex">
                         <Popover.Button
-                          className={classNames(
-                            open
-                              ? 'border-indigo-500 text-indigo-600'
-                              : 'border-transparent text-gray-700 hover:text-gray-900',
-                          )}
+                          className={
+                            !isHome
+                              ? classNames(
+                                  open
+                                    ? 'border-indigo-500 text-indigo-600'
+                                    : 'border-transparent text-gray-500 hover:text-gray-900',
+                                )
+                              : classNames(
+                                  open
+                                    ? 'border-indigo-500 text-indigo-600'
+                                    : 'border-transparent text-white hover:text-gray-300',
+                                )
+                          }
                         >
                           <Link to={item.to}>{item.title}</Link>
                         </Popover.Button>

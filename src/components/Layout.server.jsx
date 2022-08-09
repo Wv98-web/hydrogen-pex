@@ -50,7 +50,7 @@ export function Layout({children}) {
               {shop.name}
             </Link>
 
-            <Header menu={menu} />
+            <Header menu={menu} isHome={isHome} />
           </div>
         </header>
 
