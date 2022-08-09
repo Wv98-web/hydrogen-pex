@@ -1,6 +1,6 @@
 import {Link, Image, Money} from '@shopify/hydrogen';
 
-export default function ProductCard({product}) {
+export function ProductCard({product}) {
   const {priceV2: price, compareAtPriceV2: compareAtPrice} =
     product.variants?.nodes[0] || {};
 

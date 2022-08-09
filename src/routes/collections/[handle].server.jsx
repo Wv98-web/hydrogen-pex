@@ -7,8 +7,8 @@ import {
   Seo,
 } from '@shopify/hydrogen';
 
-import {Layout} from '../../components/Layout.server';
-import ProductCard from '../../components/ProductCard.server';
+import {Layout} from '../../components/global/Layout.server';
+import {ProductCard} from '../../components/product/ProductCard.server';
 import {Suspense} from 'react';
 
 export default function Collection() {

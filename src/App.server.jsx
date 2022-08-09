@@ -1,19 +1,26 @@
 import React, {Suspense} from 'react';
 import renderHydrogen from '@shopify/hydrogen/entry-server';
-import {Router, FileRoutes, ShopifyProvider} from '@shopify/hydrogen';
+import {
+  Router,
+  FileRoutes,
+  ShopifyProvider,
+  CartProvider,
+} from '@shopify/hydrogen';
 
 import {DefaultSeo} from './components/index.server';
 
-function App() {
+function App({routes}) {
   return (
     <Suspense fallback={null}>
       <ShopifyProvider>
-        <Suspense>
-          <DefaultSeo />
-        </Suspense>
-        <Router>
-          <FileRoutes />
-        </Router>
+        <CartProvider>
+          <Suspense>
+            <DefaultSeo />
+          </Suspense>
+          <Router>
+            <FileRoutes routes={routes} />
+          </Router>
+        </CartProvider>
       </ShopifyProvider>
     </Suspense>
   );

@@ -3,13 +3,12 @@ import {
   CacheLong,
   gql,
   useUrl,
-  Link,
   Seo,
 } from '@shopify/hydrogen';
 import {Suspense} from 'react';
-import {parseMenu} from '../lib/util';
+import {parseMenu} from '../../lib/util';
 
-import {Header} from './index';
+import {Header} from '../index';
 
 const HEADER_MENU_HANDLE = 'main-menu';
 
@@ -39,20 +38,8 @@ export function Layout({children}) {
             Skip to content
           </a>
         </div>
-        <header
-          role="banner"
-          className={`flex items-center h-16 p-6 md:p-8 lg:p-12 sticky backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-4 antialiased transition shadow-sm ${
-            isHome ? 'bg-black/80 text-white' : 'bg-white/80'
-          }`}
-        >
-          <div className="flex gap-12">
-            <Link className="font-bold" to="/">
-              {shop.name}
-            </Link>
 
-            <Header menu={menu} isHome={isHome} />
-          </div>
-        </header>
+        <Header shop={shop} menu={menu} isHome={isHome} />
 
         <main role="main" id="mainContent" className="flex-grow">
           <Suspense>{children}</Suspense>
